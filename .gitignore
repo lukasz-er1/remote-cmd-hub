@@ -127,6 +127,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+*.json
 
 # Spyder project settings
 .spyderproject

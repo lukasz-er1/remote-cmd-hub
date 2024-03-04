@@ -6,6 +6,8 @@ Command execution occurs by having the remote computers query the server for pen
 ## Features
 Execute commands on remote computers via a web interface.
 View command execution output history in the web application interface.
+Choose machine for sending command. 
+Queue commands. 
 
 ## Installation
 Clone the repository:

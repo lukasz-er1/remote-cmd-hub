@@ -5,8 +5,28 @@ app = Flask(__name__)
 
 
 @app.get("/")
-def main():
-    return render_template("main.html")
+def main_get():
+    try:
+        with open(f"cmd_to_execute.json", "r") as json_file:
+            commands: dict = json.load(json_file)
+    except (json.JSONDecodeError, FileNotFoundError):
+        commands: dict = {"commands": []}
+
+    return render_template("main.html", commands=commands)
+
+
+@app.post("/")
+def main_post():
+    cmd = request.form.get("cmd")
+    try:
+        with open(f"cmd_to_execute.json", "r") as json_file:
+            commands: dict = json.load(json_file)
+    except (json.JSONDecodeError, FileNotFoundError):
+        commands: dict = {"commands": []}
+    commands["commands"].append(cmd)
+    with open(f"cmd_to_execute.json", "w+") as json_file:
+        json.dump(obj=commands, fp=json_file, indent=4)
+    return cmd
 
 
 @app.get("/cmd1")

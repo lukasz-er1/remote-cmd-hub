@@ -1,50 +1,44 @@
 import json
+from app_functions import get_commands_from_json, dump_commands_to_json
 from flask import Flask, request, render_template, redirect
 
 app = Flask(__name__)
 
 
-def get_commands_from_json(id: str) -> dict:
-    try:
-        with open(f"app/data/{id}.json", "r") as f:
-            return json.load(f)
-    except Exception:
-        return {"commands": []}
-
-
-@app.get("/")
-def main_get():
-    commands = get_commands_from_json("cmd_to_execute")
+@app.get("/<machine_id>")
+def machine_get(machine_id):
+    commands = get_commands_from_json(machine_id)
     commands = {"commands": []} if commands == {} else commands
 
-    return render_template("main.html", commands=commands)
+    return render_template("main.html", commands=commands, machine_id=machine_id)
 
 
-@app.post("/")
-def main_post():
+@app.post("/<machine_id>")
+def machine_post(machine_id):
     cmd: str = request.form.get("cmd")
-    commands = get_commands_from_json("cmd_to_execute")
+    commands = get_commands_from_json(machine_id)
     commands["commands"].append(cmd)
-    with open(f"app/data/cmd_to_execute.json", "w+") as json_file:
-        json.dump(obj=commands, fp=json_file, indent=4)
+    dump_commands_to_json(machine_id, commands)
 
-    return redirect("/", 201)
-
-
-@app.get("/cmd1")
-def usr():
-    return "ls /usr"
+    return redirect(f"/{machine_id}", 201)
 
 
-@app.get("/cmd2")
-def opt():
-    return "ls /opt"
+@app.get("/<machine_id>/api")
+def machine_api_get(machine_id):
+    commands = get_commands_from_json(machine_id)
+    if len(commands["commands"]) > 0:
+        cmd = commands["commands"].pop(0)
+        dump_commands_to_json(machine_id, commands)
+    else:
+        cmd = "nothing_to_execute"
+
+    return cmd, 200
 
 
-@app.post("/output")
-def output_post():
+@app.post("/<machine_id>/api")
+def machine_api_post(machine_id):
     try:
-        with open(f"output_history.json", "r") as json_file:
+        with open(f"app/data/{machine_id}_out.json", "r") as json_file:
             output_history = json.load(json_file)
     except (json.JSONDecodeError, FileNotFoundError):
         output_history = {"history": []}
@@ -52,21 +46,10 @@ def output_post():
     data: dict = request.get_json()
     output_history["history"].append(data)
 
-    with open(f"output_history.json", "w+") as json_file:
+    with open(f"app/data/{machine_id}_out.json", "w+") as json_file:
         json.dump(obj=output_history, fp=json_file, indent=4)
 
     return "OK", 201
-
-
-@app.get("/output")
-def output_get():
-    try:
-        with open(f"output_history.json", "r") as json_file:
-            output_history = json.load(json_file)
-    except (json.JSONDecodeError, FileNotFoundError):
-        output_history: dict = {"history": []}
-
-    return output_history
 
 
 if __name__ == "__main__":

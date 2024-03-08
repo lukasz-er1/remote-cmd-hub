@@ -44,7 +44,7 @@ def machine_api_post(machine_id):
         output_history = {"history": []}
 
     data: dict = request.get_json()
-    output_history["history"].append(data)
+    output_history["history"].insert(0, data)
 
     with open(f"app/data/{machine_id}_out.json", "w+") as json_file:
         json.dump(obj=output_history, fp=json_file, indent=4)

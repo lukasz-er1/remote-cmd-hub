@@ -5,7 +5,6 @@ from dotenv import dotenv_values, set_key
 from time import sleep
 from datetime import datetime
 
-
 api_url = "http://127.0.0.1:5000"
 
 
@@ -19,12 +18,13 @@ def execute_cmd_from_server(machinde_id: str) -> None:
 
 
 if __name__ == "__main__":
+
     config = dotenv_values(".env")
     machinde_id = config.get("machinde_id")
     if machinde_id is None:
         machinde_id = str(uuid.uuid4())
         set_key(".env", "machinde_id", machinde_id)
 
-    execute_cmd_from_server(machinde_id)
-    # sleep(2)
-    # execute_cmd_from_server("cmd2")
+    while True:
+        execute_cmd_from_server(machinde_id)
+        sleep(10)

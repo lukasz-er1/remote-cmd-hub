@@ -37,17 +37,11 @@ def machine_api_get(machine_id):
 
 @app.post("/<machine_id>/api")
 def machine_api_post(machine_id):
-    try:
-        with open(f"app/data/{machine_id}_out.json", "r") as json_file:
-            output_history = json.load(json_file)
-    except (json.JSONDecodeError, FileNotFoundError):
-        output_history = {"history": []}
+    output_history = get_commands_from_json(machine_id, history=True)
 
     data: dict = request.get_json()
-    output_history["history"].insert(0, data)
-
-    with open(f"app/data/{machine_id}_out.json", "w+") as json_file:
-        json.dump(obj=output_history, fp=json_file, indent=4)
+    output_history["commands"].insert(0, data)
+    dump_commands_to_json(machine_id, output_history, history=True)
 
     return "OK", 201
 

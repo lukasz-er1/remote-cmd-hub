@@ -8,9 +8,12 @@ app = Flask(__name__)
 @app.get("/<machine_id>")
 def machine_get(machine_id):
     commands = get_commands_from_json(machine_id)
+    history = get_commands_from_json(machine_id, history=True)
     commands = {"commands": []} if commands == {} else commands
 
-    return render_template("main.html", commands=commands, machine_id=machine_id)
+    return render_template(
+        "main.html", commands=commands, machine_id=machine_id, history=history
+    )
 
 
 @app.post("/<machine_id>")

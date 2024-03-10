@@ -9,7 +9,7 @@
         <form action="/{{ machine_id }}" method="POST">
             machine: <span name="machine_id" style="color: #7fffd4">{{ machine_id }}</span>
             <div class="box-title">Execute command</div>
-        
+
             <textarea name="cmd" class="courier-mono green" placeholder="Enter command here..." rows="3"
                 required></textarea>
             <button class="button-success pure-button margin-0 black bold" style="margin-bottom: 40px !important;"
@@ -17,11 +17,19 @@
         </form>
         <div class="box-title">Pending:</div>
         <div class="box-content courier-mono green">
-        <hr>
-        {% for cmd in commands["commands"] %}
+            <hr>
+            {% for cmd in commands["commands"] %}
             {{ cmd }}
             <hr>
-        {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="box-title">History:</div>
+        <div class="box-content courier-mono green">
+            <hr>
+            {% for cmd in history["commands"] %}
+            {{ cmd }}
+            <hr>
+            {% endfor %}
         </div>
     </div>
     <div class="pure-u-1-24 pure-u-xl-1-6 pure-u-xxl-1-5"></div>

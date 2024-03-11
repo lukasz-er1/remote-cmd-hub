@@ -25,9 +25,15 @@ Run the server:
 ```bash
 python app/app.py
 ```
+
+Run the client:
+```bash
+python app/client.py
+```
+
 Access the web interface of the application using a web browser on http://127.0.0.1:5000.
 
-Enter the command you want to execute on a remote computer.
+Enter the command you want to execute on a remote client.
 
 Wait for the remote computer to query the server and execute the command.
 

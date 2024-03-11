@@ -4,6 +4,11 @@ body {
     line-height: 1.5rem;
 }
 
+p {
+    margin: 0;
+    padding: 0;
+}
+
 .box-content {
     padding: 0.5rem 1rem;
     margin: 0 0 40px 0;
@@ -72,6 +77,14 @@ hr {
 
 .green {
     color: #00c700 !important;
+}
+
+.yellow {
+    color: #ffff00 !important;
+}
+
+.lightblue {
+    color: #00d0ff !important;
 }
 
 .black {

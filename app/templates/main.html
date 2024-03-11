@@ -27,7 +27,8 @@
         <div class="box-content courier-mono green">
             <hr>
             {% for cmd in history["commands"] %}
-            {{ cmd }}
+                {{ cmd["time"] }} >> <span class="yellow">{{ cmd["cmd"] }}</span>
+                <p class="lightblue">{{ cmd["output"] }}</p>
             <hr>
             {% endfor %}
         </div>

@@ -1,3 +1,4 @@
+import os
 from app_functions import (
     get_commands_from_json,
     dump_commands_to_json,
@@ -7,6 +8,19 @@ from app_functions import (
 from flask import Flask, request, render_template, redirect
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
+
+
+@app.get("/")
+def home():
+    ls = os.listdir("app/data")
+    id_list = [x.split(".json")[0] for x in ls if ".json" in x and "_out" not in x]
+    machines = dict()
+    for id in id_list:
+        commands = get_commands_from_json(id)
+        machines[id] = last_ping_time_ago(commands["pings"][0])
+
+    return machines
 
 
 @app.get("/<machine_id>")

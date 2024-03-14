@@ -48,6 +48,23 @@ textarea::placeholder {
     color: yellow;
 }
 
+a {
+    text-decoration: none;
+    color: #00cf67;
+}
+
+a:hover {
+    color: #eaff00;
+}
+
+a.del {
+    color: #bb0000;
+}
+
+a.del:hover {
+    color: #ff0000;
+}
+
 .button-success {
     color: #eee;
     border-radius: 4px;

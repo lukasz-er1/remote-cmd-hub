@@ -20,7 +20,7 @@ def home():
         commands = get_commands_from_json(id)
         machines[id] = last_ping_time_ago(commands["pings"][0])
 
-    return machines
+    return render_template("home.html", machines=machines)
 
 
 @app.get("/<machine_id>")

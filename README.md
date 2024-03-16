@@ -4,10 +4,18 @@ Remote machine can be also behind VPN, because the communication is ongoing only
 Command execution occurs by having the remote computers query the server for pending commands to execute. If commands are available, the remote computer executes them and returns the output using the POST request to the server API.
 
 ## Features
-Execute commands on remote computers via a web interface.
-View command execution output history in the web application interface.
-Choose machine for sending command. 
-Queue commands. 
+- Execute commands on remote computers via a web interface.
+
+- View command execution output history in the web application interface.
+
+- Choose machine for sending command.
+
+- Queue commands.
+
+## To do:
+- User login
+
+- Database instead of json files
 
 ## Installation
 Clone the repository:

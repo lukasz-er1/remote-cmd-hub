@@ -8,7 +8,7 @@ def get_commands_from_json(id: str, history: bool = False) -> dict:
         with open(json_path, "r") as json_file:
             return json.load(json_file)
     except (json.JSONDecodeError, FileNotFoundError):
-        return {"commands": [], "pings": []}
+        return {"commands": [], "pings": [0]}
 
 
 def dump_commands_to_json(id: str, commands: dict, history: bool = False) -> None:

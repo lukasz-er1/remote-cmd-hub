@@ -26,8 +26,8 @@ def home():
 @app.get("/<machine_id>")
 def machine_get(machine_id):
     commands = get_commands_from_json(machine_id)
-    history = get_commands_from_json(machine_id, history=True)
     last_ping = last_ping_time_ago(commands["pings"][0])
+    history = get_commands_from_json(machine_id, history=True)
 
     return render_template(
         "main.html",

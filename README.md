@@ -26,7 +26,7 @@ git clone https://github.com/lukasz-er1/remote-cmd-hub.git
 Install dependencies:
 ```bash
 cd remote-cmd-hub
-pip install -r requirements.txt
+pip install -r requirements_server.txt
 ```
 
 Run the server:
@@ -36,6 +36,7 @@ python app/app.py
 
 Run the client:
 ```bash
+pip install -r requirements_client.txt
 python app/client.py
 ```
 

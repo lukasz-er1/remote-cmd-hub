@@ -1,7 +1,12 @@
 # remote-cmd-hub
-This web application, built using Flask in Python, is designed to execute commands on remote computers without using SSH, Telnet, VNC, etc. Access from the client to the server is the only requirement. 
-Remote machine can be also behind VPN, because the communication is ongoing only in one side: client --> server.
-Command execution occurs by having the remote computers query the server for pending commands to execute. If commands are available, the remote computer executes them and returns the output using the POST request to the server API.
+This web application, built using Flask in Python, is designed to execute commands on remote computers without using SSH, Telnet, VNC, etc.
+
+Access in one way - from the client to the server is the only requirement. Remote machine can be also behind VPN, because the communication is ongoing only in one side: client --> server.
+
+Command execution occurs by having the remote computers query the server for pending commands to execute. 
+
+If commands are available, the remote computer executes them and returns the output using the POST request to the server API.
+
 
 ## Features
 - Execute commands on remote computers via a web interface.
@@ -12,10 +17,12 @@ Command execution occurs by having the remote computers query the server for pen
 
 - Queue commands.
 
+
 ## To do:
 - User login
 
 - Database instead of json files
+
 
 ## Installation
 Clone the repository:

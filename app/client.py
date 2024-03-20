@@ -26,6 +26,15 @@ if __name__ == "__main__":
 
     config = dotenv_values(".env")
     machinde_id = config.get("machinde_id")
+    user_id = config.get("user_id")
+
+    if user_id is None:
+        user_id = input(f"Enter your user ID from {api_url}: ")
+        if len(user_id) == 36:
+            set_key(".env", "user_id", user_id.strip())
+        else:
+            raise ValueError(f"Provided user ID is invalid (it needs to be 36 characters long)")
+
     if machinde_id is None:
         machinde_id = str(uuid4())
         set_key(".env", "machinde_id", machinde_id)

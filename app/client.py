@@ -1,11 +1,10 @@
 import requests
+import argparse
 from uuid import uuid4
 from subprocess import getoutput
 from dotenv import dotenv_values, set_key
 from time import sleep
 from datetime import datetime
-
-api_url = "http://127.0.0.1:5000"
 
 
 def execute_cmd_from_server(machinde_id: str) -> None:
@@ -24,17 +23,37 @@ def execute_cmd_from_server(machinde_id: str) -> None:
 
 if __name__ == "__main__":
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--api_url", help="Server URL")
+    parser.add_argument("--user_id", help="User ID on the server side")
+
+    args, _ = parser.parse_known_args()
     config = dotenv_values(".env")
-    machinde_id = config.get("machinde_id")
-    user_id = config.get("user_id")
 
-    if user_id is None:
-        user_id = input(f"Enter your user ID from {api_url}: ")
-        if len(user_id) == 36:
-            set_key(".env", "user_id", user_id.strip())
+    if args.api_url:
+        api_url = args.api_url
+        set_key(".env", "api_url", api_url)
+    else:
+        api_url = config.get("api_url")
+        if api_url is None:
+            api_url = input(f"Enter server URL: ")
+            set_key(".env", "user_id", api_url.strip())
         else:
-            raise ValueError(f"Provided user ID is invalid (it needs to be 36 characters long)")
+            print(f"Client will use server URL from env: {api_url}.")
 
+    if args.user_id:
+        user_id = args.user_id
+        set_key(".env", "user_id", user_id)
+    else:
+        user_id = config.get("user_id")
+        if user_id is None:
+            user_id = input(f"Enter your user ID from {api_url}: ")
+            if len(user_id) == 36:
+                set_key(".env", "user_id", user_id.strip())
+            else:
+                raise ValueError(f"Provided user ID ({user_id}) is invalid (it needs to be 36 characters long)")
+
+    machinde_id = config.get("machinde_id")
     if machinde_id is None:
         machinde_id = str(uuid4())
         set_key(".env", "machinde_id", machinde_id)

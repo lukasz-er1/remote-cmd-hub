@@ -70,6 +70,8 @@ def machine_api_post(machine_id):
 
     data: dict = request.get_json()
     output_history["commands"].insert(0, data)
+    if len(output_history["commands"]) >= 15:
+        output_history["commands"].pop(-1)
     dump_commands_to_json(machine_id, output_history, history=True)
 
     return "OK", 201

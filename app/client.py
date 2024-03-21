@@ -51,7 +51,9 @@ if __name__ == "__main__":
             if len(user_id) == 36:
                 set_key(".env", "user_id", user_id.strip())
             else:
-                raise ValueError(f"Provided user ID ({user_id}) is invalid (it needs to be 36 characters long)")
+                raise ValueError(
+                    f"Provided user ID ({user_id}) is invalid (it needs to be 36 characters long)"
+                )
 
     machinde_id = config.get("machinde_id")
     if machinde_id is None:

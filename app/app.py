@@ -23,6 +23,11 @@ def home():
     return render_template("home.html", machines=machines)
 
 
+@app.get("/login")
+def login():
+    return render_template("login.html")
+
+
 @app.get("/<machine_id>")
 def machine_get(machine_id):
     commands = get_commands_from_json(machine_id)

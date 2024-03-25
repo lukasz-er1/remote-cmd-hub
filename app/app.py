@@ -45,6 +45,7 @@ def request_loader(request):
 
 
 @app.get("/")
+@flask_login.login_required
 def home():
     ls = listdir("app/data")
     id_list = [x.split(".json")[0] for x in ls if ".json" in x and "_out" not in x]
@@ -53,7 +54,7 @@ def home():
         commands = get_commands_from_json(id)
         machines[id] = last_ping_time_ago(commands["pings"][0])
 
-    return render_template("home.html", machines=machines)
+    return render_template("home.html", machines=machines, user=flask_login.current_user.id)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -66,7 +67,7 @@ def login():
         user = User()
         user.id = email
         flask_login.login_user(user)
-        return redirect(url_for("protected"))
+        return redirect(url_for("home"))
 
     return "Bad login"
 
@@ -85,7 +86,7 @@ def logout():
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
-    return "Unauthorized", 401
+    return redirect(url_for("login"), 401)
 
 
 @app.get("/<machine_id>")

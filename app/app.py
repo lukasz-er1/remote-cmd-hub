@@ -1,4 +1,4 @@
-from os import listdir
+from os import listdir, remove
 from app_functions import (
     get_commands_from_json,
     dump_commands_to_json,
@@ -141,6 +141,20 @@ def machine_api_post(machine_id):
     dump_commands_to_json(machine_id, output_history, history=True)
 
     return "OK", 201
+
+
+@app.get("/<machine_id>/delete")
+def machine_delete(machine_id):
+    try:
+        remove(f"app/data/{machine_id}_out.json")
+    except FileNotFoundError:
+        pass
+    try:
+        remove(f"app/data/{machine_id}.json")
+    except FileNotFoundError:
+        pass
+
+    return redirect(url_for("home"), 200)
 
 
 if __name__ == "__main__":
